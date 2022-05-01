@@ -1,8 +1,8 @@
-import PostModel from '../models/posts'
+import ToolModel from '../models/tools'
 
-const postRoute = (app) => {
+const toolRoute = (app) => {
     
-    app.route('/posts/:id?')
+    app.route('/tools/:id?')
         .get(async (req, res) => {
             const { id } = req.params
             const query = {};
@@ -13,18 +13,18 @@ const postRoute = (app) => {
 
             try {
 
-                const posts = await PostModel.find(query)
-                res.send({ posts })
+                const tools = await ToolModel.find(query)
+                res.send({ tools })
                 
             } catch (error) {
-                res.status(400).send({ error: 'Failed to find post' })
+                res.status(400).send({ error: 'Failed to find tool' })
             }
         })
-        .post(async (req, res) => {
+        .tool(async (req, res) => {
 
             try {
-                const post = new PostModel(req.body)
-                await post.save()
+                const tool = new ToolModel(req.body)
+                await tool.save()
 
                 res.status(201).send('OK')
             } catch (error) {
@@ -35,22 +35,22 @@ const postRoute = (app) => {
             const { id } = req.params
 
             if (!id) {
-                return res.status(400).send({ error: 'A post with this ID is missing.' })
+                return res.status(400).send({ error: 'A tool with this ID is missing.' })
             }
 
             try {
-                const updatedPost = await PostModel.findOneAndUpdate({ _id: id }, req.body, {
+                const updatedTool = await ToolModel.findOneAndUpdate({ _id: id }, req.body, {
                     new: true,
                 });
 
-                console.log(updatedPost)
+                console.log(updatedTool)
 
-                if (updatedPost) {
+                if (updatedTool) {
                     return res.status(200).send('OK')
                 }
 
 
-                res.status(400).send({ error: 'Post update failed' })
+                res.status(400).send({ error: 'Tool update failed' })
 
                 
             } catch (error) {
@@ -62,17 +62,17 @@ const postRoute = (app) => {
             const { id } = req.params
 
             if (!id) {
-                return res.status(400).send({ error: 'A post with this ID is missing.' })
+                return res.status(400).send({ error: 'A tool with this ID is missing.' })
             }
 
             try {
-                const deletedPost = await PostModel.deleteOne({ _id: id })
+                const deletedTool = await ToolModel.deleteOne({ _id: id })
 
-                if (deletedPost.deletedCount) {
+                if (deletedTool.deletedCount) {
                     return res.send('OK')
                 }
 
-                res.status(400).send({ error: 'Post delete failed' })
+                res.status(400).send({ error: 'Tool delete failed' })
 
             } catch (error) {
                 res.send(error)
@@ -80,4 +80,4 @@ const postRoute = (app) => {
         })
 }
 
-module.exports = postRoute
+module.exports = toolRoute
