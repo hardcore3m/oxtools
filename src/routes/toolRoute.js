@@ -20,7 +20,7 @@ const toolRoute = (app) => {
                 res.status(400).send({ error: 'Failed to find tool' })
             }
         })
-        .tool(async (req, res) => {
+        .post(async (req, res) => {
 
             try {
                 const tool = new ToolModel(req.body)

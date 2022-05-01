@@ -2,8 +2,8 @@ import Express from 'express'
 import bodyParser from 'body-parser'
 
 import database from './config/database'
-import userRoute from './routes/userRoute'
-import postRoute from './routes/postRoute'
+
+import toolRoute from './routes/toolRoute'
 
 const app = Express()
 const port = 3000||process.env.PORT
@@ -11,7 +11,7 @@ const port = 3000||process.env.PORT
 app.use(bodyParser.urlencoded({ extended: false }))
 app.set('json spaces', 2);
 
-toolsRoute(app)
+toolRoute(app)
 
 app.get('/', (req, res) => res.send('Olá mundo pelo Express!'))
 
